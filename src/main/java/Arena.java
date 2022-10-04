@@ -1,9 +1,11 @@
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
-
-import javax.swing.*;
 
 public class Arena {
     private int width, height;
@@ -11,8 +13,11 @@ public class Arena {
 
     public Arena(int width, int height, Hero hero) { this.width = width; this.height = height; this.hero = hero; }
 
-    public void draw(Screen screen) {
-        screen.setCharacter(hero.getPosition().getX(), hero.getPosition().getY(), TextCharacter.fromCharacter('X') [0]);
+    public void draw(TextGraphics graphics) {
+        graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
+        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
+
+        hero.draw(graphics);
     }
 
     public void processKey(KeyStroke key) {
