@@ -11,20 +11,21 @@ import java.io.IOException;
 
 public class Game {
     private Screen screen;
-
-    Hero hero;
+    int width = 40, height = 20;
+    private Hero hero = new Hero(10, 10);
+    private Arena arena = new Arena(width, height, hero);
 
     public Game() {
         try {
-            TerminalSize terminalSize = new TerminalSize(40, 20);
+            TerminalSize terminalSize = new TerminalSize(width, height);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
+
             screen = new TerminalScreen(terminal);
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
 
-            hero = new Hero(10, 10);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,19 +33,12 @@ public class Game {
 
     private void draw() throws IOException {
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
     }
 
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
-
     private void processKey(KeyStroke key) {
-        if (key.getKeyType() == KeyType.ArrowUp) moveHero(hero.moveUp());
-        if (key.getKeyType() == KeyType.ArrowDown) moveHero(hero.moveDown());
-        if (key.getKeyType() == KeyType.ArrowLeft) moveHero(hero.moveLeft());
-        if (key.getKeyType() == KeyType.ArrowRight) moveHero(hero.moveRight());
+        arena.processKey(key);
     }
 
     public void run() throws IOException {
