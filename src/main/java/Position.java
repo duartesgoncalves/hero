@@ -19,5 +19,4 @@ public class Position {
         Position p = (Position) o;
         return x == p.getX() && y == p.getY();
     }
-
 }
