@@ -9,6 +9,7 @@ public class Wall extends Element{
        super(x, y);
     }
 
+    @Override
     public void draw(TextGraphics graphics) {
         graphics.setForegroundColor(TextColor.Factory.fromString("#C9C9C9"));
         graphics.enableModifiers(SGR.BOLD);

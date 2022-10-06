@@ -46,6 +46,7 @@ public class Game {
 
     private void processKey(KeyStroke key) {
         arena.processKey(key);
+        arena.moveMonsters();
     }
 
     public void run() throws IOException {
@@ -56,6 +57,16 @@ public class Game {
             if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') screen.close();
             else if (key.getKeyType() == KeyType.EOF) break;
             processKey(key);
+
+            if (arena.verifyMonsterCollisions()) {
+                System.out.println("GAME OVER!");
+                screen.close();
+            }
+
+            if (arena.getCoins().size() == 0) {
+                System.out.println("YOU WON");
+                screen.close();
+            }
         }
     }
 }
